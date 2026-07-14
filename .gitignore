@@ -1,0 +1,10 @@
+# Local audit and temporary files
+repo-audit.json
+.docx-render-current/
+*.tmp
+*.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
