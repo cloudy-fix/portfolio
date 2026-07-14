@@ -4,10 +4,13 @@ Responsive cloud engineering portfolio for AWS, Google Cloud, OCI/IBM Cloud lear
 
 Live site: https://cloudy-fix.github.io/portfolio/
 
+Project hub: https://cloudy-fix.github.io/portfolio/projects.html
+
 ## What This Showcases
 
 - AWS Certified Cloud Practitioner and Google Associate Cloud Engineer profile.
 - Cloud project case studies for DNS migration, database migration, VPN, load balancing, and private storage access.
+- Dedicated project hub with every GitHub repository linked to repo, architecture, and workflow docs.
 - Resume, certifications, credential proof assets, profile photo, and original cloud/tool logos.
 - 3D glass background and responsive UI for desktop and mobile browsers.
 - Interview-ready positioning for Google Cloud, AWS, IBM Cloud, OCI, DevOps, cloud support, and cloud security roles.
@@ -17,6 +20,7 @@ Live site: https://cloudy-fix.github.io/portfolio/
 | Path | Purpose |
 | --- | --- |
 | `index.html` | Main single-page portfolio site with UI, content, animation, and 3D scene logic. |
+| `projects.html` | Repository hub with all project links, filters, search, and documentation links. |
 | `assets/profile.jpg` | Public profile image used in the hero section. |
 | `assets/resume/` | Resume PDF and editable DOCX source. |
 | `assets/certifications/` | Certification badges, AWS TN Skill certificate, and scorecard proof. |

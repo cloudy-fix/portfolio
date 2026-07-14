@@ -12,5 +12,8 @@ jobs:
       - name: Validate static site files
         run: |
           test -f index.html
+          test -f projects.html
           test -d assets
           grep -q "Hariharan" index.html
+          grep -q "Project Repository Hub" projects.html
+          grep -q "project-card" projects.html

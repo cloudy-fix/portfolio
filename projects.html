@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hariharan J project repository hub with GitHub links, architecture docs, workflow diagrams, and production-ready project categories.">
+  <title>Hariharan J | Project Repository Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(255, 255, 255, 0.085);
+      --panel-strong: rgba(255, 255, 255, 0.14);
+      --line: rgba(255, 255, 255, 0.16);
+      --text: #eef6ff;
+      --muted: #a9b8c9;
+      --blue: #60a5fa;
+      --green: #37d399;
+      --amber: #f4c95d;
+      --red: #fb7185;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(96, 165, 250, 0.22), transparent 31%),
+        radial-gradient(circle at 86% 18%, rgba(55, 211, 153, 0.16), transparent 30%),
+        linear-gradient(135deg, #07111f 0%, #0c1827 48%, #101827 100%);
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 76%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      padding: 9px 11px;
+      border-radius: var(--radius);
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero {
+      padding: 78px 0 32px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(2.45rem, 6vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .hero-actions,
+    .card-actions,
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+    }
+
+    .button,
+    .filter {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .button:hover,
+    .filter:hover,
+    .filter.active {
+      transform: translateY(-2px);
+      border-color: rgba(96, 165, 250, 0.65);
+      background: rgba(96, 165, 250, 0.18);
+    }
+
+    .button.primary {
+      color: #04111f;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      border-color: transparent;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .toolbar {
+      margin: 34px 0 24px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.07);
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 14px;
+      background: rgba(3, 10, 20, 0.68);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: rgba(96, 165, 250, 0.74);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      padding-bottom: 62px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.055)),
+        rgba(9, 20, 35, 0.8);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 28%, rgba(96, 165, 250, 0.09));
+      opacity: 0.62;
+    }
+
+    .project-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #05111f;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .badge,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .badge.green {
+      color: #b8f7d8;
+      border-color: rgba(55, 211, 153, 0.42);
+      background: rgba(55, 211, 153, 0.12);
+    }
+
+    .badge.private {
+      color: #ffd7df;
+      border-color: rgba(251, 113, 133, 0.42);
+      background: rgba(251, 113, 133, 0.12);
+    }
+
+    .project-card h2 {
+      margin: 20px 0 9px;
+      font-size: 1.18rem;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 16px 0 18px;
+    }
+
+    .card-actions {
+      margin-top: auto;
+    }
+
+    .card-actions a {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .card-actions a:hover {
+      border-color: rgba(96, 165, 250, 0.65);
+      background: rgba(96, 165, 250, 0.15);
+    }
+
+    .empty {
+      display: none;
+      margin: 30px 0 70px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 3px;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .summary,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card {
+        min-height: auto;
+      }
+
+      .filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+      }
+
+      .filter {
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="index.html" aria-label="Back to portfolio home">
+        <span class="brand-mark"><i data-lucide="boxes"></i></span>
+        <span>Hariharan J Projects</span>
+      </a>
+      <nav class="nav-links" aria-label="Project hub navigation">
+        <a href="index.html">Portfolio</a>
+        <a class="active" href="projects.html">All Projects</a>
+        <a href="https://github.com/cloudy-fix" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="assets/resume/Hariharan_J_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow"><i data-lucide="radio-tower"></i> Repository Hub</p>
+          <h1>All projects, linked cleanly for interviews.</h1>
+          <p class="lead">
+            A single page for AWS, Google Cloud, DevOps, backend, AI, security, data, and practice projects. Each card links to the GitHub repository plus architecture and workflow documents added for production-ready review.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://github.com/cloudy-fix" target="_blank" rel="noreferrer">
+              <i data-lucide="github"></i> Open GitHub
+            </a>
+            <a class="button" href="index.html#projects">
+              <i data-lucide="layers-3"></i> Featured Cloud Work
+            </a>
+          </div>
+        </div>
+        <div class="summary" aria-label="Project summary">
+          <div class="metric">
+            <strong>18</strong>
+            <span>Repositories organized with docs, diagrams, CI, and clean links.</span>
+          </div>
+          <div class="metric">
+            <strong>100%</strong>
+            <span>Latest GitHub Actions checks were green after hardening.</span>
+          </div>
+          <div class="metric">
+            <strong>5</strong>
+            <span>Core focus areas: Cloud, DevOps, Backend, AI, Security/Data.</span>
+          </div>
+          <div class="metric">
+            <strong>1</strong>
+            <span>Recruiter-ready hub for fast project scanning.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" aria-label="Project filters">
+      <div class="toolbar">
+        <input class="search" id="searchInput" type="search" placeholder="Search projects, skills, topics, or repo names..." aria-label="Search projects">
+        <div class="filters" id="filters">
+          <button class="filter active" type="button" data-filter="all">All</button>
+          <button class="filter" type="button" data-filter="cloud">Cloud</button>
+          <button class="filter" type="button" data-filter="backend">Backend</button>
+          <button class="filter" type="button" data-filter="ai">AI</button>
+          <button class="filter" type="button" data-filter="security">Security</button>
+          <button class="filter" type="button" data-filter="data">Data</button>
+          <button class="filter" type="button" data-filter="practice">Practice</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell grid" id="projectGrid" aria-label="All repositories">
+      <article class="project-card" data-category="cloud backend security" data-search="portfolio cloud engineering aws google cloud devops security github pages html resume certifications">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="layout-dashboard"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">HTML</span></div>
+        </div>
+        <h2>Portfolio</h2>
+        <p>Interview-ready cloud engineering portfolio for AWS, Google Cloud, OCI/IBM learning, DevOps, networking, and cloud security.</p>
+        <div class="tags"><span class="tag">AWS</span><span class="tag">Google Cloud</span><span class="tag">GitHub Pages</span></div>
+        <div class="card-actions">
+          <a href="https://cloudy-fix.github.io/portfolio/" target="_blank" rel="noreferrer"><i data-lucide="globe-2"></i> Live</a>
+          <a href="https://github.com/cloudy-fix/portfolio" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/portfolio/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="cloud backend security" data-search="secure warehouse management system java spring boot angular authentication role based access cybersecurity backend">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="warehouse"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Java</span></div>
+        </div>
+        <h2>Secure Warehouse Management System</h2>
+        <p>Java secure warehouse management system demonstrating authentication, role-based workflows, and backend design.</p>
+        <div class="tags"><span class="tag">Java</span><span class="tag">Angular</span><span class="tag">Security</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/secure-warehouse-management-system" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/secure-warehouse-management-system/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/secure-warehouse-management-system/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="cloud backend" data-search="api avi automation vmware avi load balancer python postman rest api tenant devops">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="server-cog"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>VMware AVI API Automation</h2>
+        <p>Python and Postman automation for VMware AVI load balancer tenant and API operations.</p>
+        <div class="tags"><span class="tag">VMware AVI</span><span class="tag">Postman</span><span class="tag">REST</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/API-AVI-AUTOMATION" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/API-AVI-AUTOMATION/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/API-AVI-AUTOMATION/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="cloud backend" data-search="vmware avi tenant post provisioning load balancer python requests rest api">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="network"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>VMware AVI Tenant Provisioning</h2>
+        <p>Focused Python/Postman tenant provisioning workflow for VMware AVI Load Balancer APIs.</p>
+        <div class="tags"><span class="tag">Load Balancer</span><span class="tag">Automation</span><span class="tag">Python</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/vmware-avi-tenant-post" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/vmware-avi-tenant-post/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/vmware-avi-tenant-post/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="backend" data-search="task manager api fastapi python postgresql redis celery docker backend crud api testing">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="list-checks"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Task Manager API</h2>
+        <p>Python task manager API for backend CRUD, REST patterns, Docker, Redis, Celery, and API testing practice.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/task-manager-api" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/task-manager-api/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/task-manager-api/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="backend data" data-search="bluecarbon backend fastapi mrv environmental data python private backend api">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="leaf"></i></div>
+          <div class="badges"><span class="badge private">Private</span><span class="badge">Python</span></div>
+        </div>
+        <h2>BlueCarbon Backend</h2>
+        <p>Private FastAPI backend for BlueCarbon MRV workflows and environmental project data services.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">MRV</span><span class="tag">Backend</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/bluecarbon-backend" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/bluecarbon-backend/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/bluecarbon-backend/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="ai backend security" data-search="ai powered regulatory compliance checker contracts rag llm fastapi streamlit chromadb contract review private">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="file-search"></i></div>
+          <div class="badges"><span class="badge private">Private</span><span class="badge">Python</span></div>
+        </div>
+        <h2>AI Regulatory Compliance Checker</h2>
+        <p>Private RAG-based regulatory compliance checker for contract review, clause extraction, and risk scoring.</p>
+        <div class="tags"><span class="tag">LLM</span><span class="tag">RAG</span><span class="tag">Compliance</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/AI-Powered-Regulatory-Compliance-Checker-for-Contracts" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/AI-Powered-Regulatory-Compliance-Checker-for-Contracts/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/AI-Powered-Regulatory-Compliance-Checker-for-Contracts/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="ai security" data-search="assignment 2 infosys rag compliance checker contract review risk analysis python llm chromadb fastapi">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="shield-alert"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Infosys RAG Compliance Checker V1</h2>
+        <p>Infosys Springboard RAG compliance checker assignment for contract review and risk analysis.</p>
+        <div class="tags"><span class="tag">Infosys</span><span class="tag">RAG</span><span class="tag">Contracts</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/assignment-2-infosys" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/assignment-2-infosys/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/assignment-2-infosys/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="ai security" data-search="assignment 3 infosys compliance checker document analysis llm rag python fastapi chromadb">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="files"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Infosys Compliance Checker V2</h2>
+        <p>Infosys Springboard compliance checker continuation with document analysis and LLM workflow practice.</p>
+        <div class="tags"><span class="tag">Infosys</span><span class="tag">LLM</span><span class="tag">Compliance</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/assignment-3-infosys" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/assignment-3-infosys/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="ai backend" data-search="admission counselor llm api education automation student guidance course university recommendations">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Docs</span></div>
+        </div>
+        <h2>Admission Counselor LLM with API</h2>
+        <p>LLM-powered admission counselor API for course guidance using eligibility and preference analysis.</p>
+        <div class="tags"><span class="tag">LLM</span><span class="tag">API</span><span class="tag">Education</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/Admission-counselor-LLM-with-API" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/Admission-counselor-LLM-with-API/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/Admission-counselor-LLM-with-API/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="data backend" data-search="defi reputation scoring server kafka microservice python risk scoring wallet transactions">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="activity"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>DeFi Reputation Scoring Server</h2>
+        <p>Python microservice for event-driven DeFi wallet reputation scoring from transaction data.</p>
+        <div class="tags"><span class="tag">Kafka</span><span class="tag">Microservice</span><span class="tag">DeFi</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/DeFi-Reputation-Scoring-Server" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/DeFi-Reputation-Scoring-Server/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/DeFi-Reputation-Scoring-Server/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="data" data-search="wallet risk scoring ethereum compound covalent api defi python risk scoring">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="wallet-cards"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Wallet Risk Scoring</h2>
+        <p>Python risk scoring engine for Ethereum wallets using Compound Protocol and Covalent API data.</p>
+        <div class="tags"><span class="tag">Ethereum</span><span class="tag">Compound</span><span class="tag">Risk</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/wallet-risk-scoring" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/wallet-risk-scoring/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/wallet-risk-scoring/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="data" data-search="aave v2 wallet credit scoring defi transaction behavior analysis python credit risk">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="chart-no-axes-combined"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Aave V2 Wallet Credit Scoring</h2>
+        <p>Aave V2 wallet credit scoring project using DeFi transaction behavior analysis.</p>
+        <div class="tags"><span class="tag">Aave</span><span class="tag">Credit Scoring</span><span class="tag">DeFi</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/aave-v2-wallet-credit-scoring" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/aave-v2-wallet-credit-scoring/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/aave-v2-wallet-credit-scoring/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="security data" data-search="pii challenge detection data privacy cybersecurity python security redaction">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="scan-face"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>PII Detection Challenge</h2>
+        <p>Python PII detection and data privacy challenge project for secure data handling practice.</p>
+        <div class="tags"><span class="tag">Cybersecurity</span><span class="tag">PII</span><span class="tag">Privacy</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/pii_challenge" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/pii_challenge/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/pii_challenge/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="ai security data" data-search="contract addresses extraction document processing information extraction contracts automation">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="file-text"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Docs</span></div>
+        </div>
+        <h2>Contract Address Extraction</h2>
+        <p>Contract address extraction practice project for document parsing and information retrieval.</p>
+        <div class="tags"><span class="tag">Contracts</span><span class="tag">Extraction</span><span class="tag">Automation</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/Contract-adresses-extraction" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/Contract-adresses-extraction/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/Contract-adresses-extraction/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="practice backend" data-search="weather application openweather api kivy python beginner project">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="cloud-sun"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Python</span></div>
+        </div>
+        <h2>Weather Application</h2>
+        <p>Simple Python weather application for API integration and beginner project practice.</p>
+        <div class="tags"><span class="tag">Kivy</span><span class="tag">API</span><span class="tag">Weather</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/weather-application" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/weather-application/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/weather-application/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="practice" data-search="todo list practice beginner project supporting github activity">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="check-square"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Practice</span></div>
+        </div>
+        <h2>Todo List Practice Repository</h2>
+        <p>Legacy todo list practice repository kept as supporting GitHub activity.</p>
+        <div class="tags"><span class="tag">Practice</span><span class="tag">Todo</span><span class="tag">Beginner</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/todolist" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/todolist/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/todolist/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-category="cloud" data-search="cloudy fix github profile readme cloud engineering aws google cloud devops profile">
+        <div class="card-top">
+          <div class="icon"><i data-lucide="badge-info"></i></div>
+          <div class="badges"><span class="badge green">Public</span><span class="badge">Profile</span></div>
+        </div>
+        <h2>GitHub Profile README</h2>
+        <p>GitHub profile README for cloud engineering portfolio, certifications, and project showcase.</p>
+        <div class="tags"><span class="tag">Profile</span><span class="tag">AWS</span><span class="tag">DevOps</span></div>
+        <div class="card-actions">
+          <a href="https://github.com/cloudy-fix/cloudy-fix" target="_blank" rel="noreferrer"><i data-lucide="github"></i> Repo</a>
+          <a href="https://github.com/cloudy-fix/cloudy-fix/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noreferrer"><i data-lucide="diagram-3"></i> Architecture</a>
+          <a href="https://github.com/cloudy-fix/cloudy-fix/blob/main/docs/diagrams/workflow.mmd" target="_blank" rel="noreferrer"><i data-lucide="workflow"></i> Workflow</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="shell empty" id="emptyState">No projects match this search or filter.</div>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <span>2026 Hariharan J. Project hub for portfolio and GitHub repository review.</span>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/lucide.min.js"></script>
+  <script>
+    const cards = Array.from(document.querySelectorAll(".project-card"));
+    const filters = Array.from(document.querySelectorAll(".filter"));
+    const searchInput = document.getElementById("searchInput");
+    const emptyState = document.getElementById("emptyState");
+    let activeFilter = "all";
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const categories = card.dataset.category || "";
+        const search = `${card.dataset.search || ""} ${card.textContent}`.toLowerCase();
+        const matchesFilter = activeFilter === "all" || categories.includes(activeFilter);
+        const matchesSearch = !query || search.includes(query);
+        const isVisible = matchesFilter && matchesSearch;
+        card.style.display = isVisible ? "" : "none";
+        if (isVisible) visibleCount += 1;
+      });
+
+      emptyState.style.display = visibleCount ? "none" : "block";
+    }
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        filters.forEach((button) => button.classList.remove("active"));
+        filter.classList.add("active");
+        activeFilter = filter.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener("input", applyFilters);
+
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
